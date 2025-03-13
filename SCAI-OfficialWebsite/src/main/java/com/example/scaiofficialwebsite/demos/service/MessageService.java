@@ -3,6 +3,7 @@ package com.example.scaiofficialwebsite.demos.service;
 import com.example.scaiofficialwebsite.demos.entity.Message;
 import com.example.scaiofficialwebsite.demos.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * Date: 2025-03-13
  * Time: 18:21
  */
-@Service
+@Repository
 public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
