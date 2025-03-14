@@ -2,26 +2,26 @@ server:
   port: 8123
   servlet:
     context-path: /api
-  spring:
-    application:
-      name: SCAI-OfficialWebsite-Backend
+spring:
+  application:
+    name: SCAI-OfficialWebsite-Backend
     # 数据库配置
-    datasource:
-      url: jdbc:mysql://127.0.0.1:3306/scai_official_website?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/scai_official_website?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
   mybatis-plus:
     configuration:
       # MyBatis 配置
-      map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: false
       # 仅在开发环境打印日志
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     global-config:
       db-config:
-        logic-delete-field: isDelete # 全局逻辑删除的实体字段名
-        logic-delete-value: 1 # 逻辑已删除值（默认为 1）
-        logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
   # 接口文档配置
   knife4j:
     enable: true
