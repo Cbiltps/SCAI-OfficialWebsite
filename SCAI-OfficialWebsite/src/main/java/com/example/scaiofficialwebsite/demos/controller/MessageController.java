@@ -1,6 +1,6 @@
 package com.example.scaiofficialwebsite.demos.controller;
 
-import com.example.scaiofficialwebsite.demos.entity.Message;
+import com.example.scaiofficialwebsite.demos.model.entity.Message;
 import com.example.scaiofficialwebsite.demos.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

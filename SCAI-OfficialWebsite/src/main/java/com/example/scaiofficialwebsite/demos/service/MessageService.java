@@ -1,11 +1,11 @@
 package com.example.scaiofficialwebsite.demos.service;
 
-import com.example.scaiofficialwebsite.demos.entity.Message;
+import com.example.scaiofficialwebsite.demos.model.entity.Message;
 import com.example.scaiofficialwebsite.demos.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**

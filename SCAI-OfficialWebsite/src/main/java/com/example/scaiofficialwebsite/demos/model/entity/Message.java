@@ -1,6 +1,8 @@
-package com.example.scaiofficialwebsite.demos.entity;
+package com.example.scaiofficialwebsite.demos.model.entity;
 
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,5 +15,5 @@ import lombok.Data;
 public class Message {
     private Long id;
     private String content;
-    private String createTime;
+    private Date createTime;
 }
