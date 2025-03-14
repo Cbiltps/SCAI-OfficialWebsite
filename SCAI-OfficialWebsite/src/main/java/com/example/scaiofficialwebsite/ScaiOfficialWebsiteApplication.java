@@ -9,7 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @MapperScan("com.example.scaiofficialwebsite.demos.mapper")
 @SpringBootApplication
-//        (exclude = {DataSourceAutoConfiguration.class})
 @EnableAspectJAutoProxy(exposeProxy = true) // 设置代理对象暴露
 public class ScaiOfficialWebsiteApplication {
 

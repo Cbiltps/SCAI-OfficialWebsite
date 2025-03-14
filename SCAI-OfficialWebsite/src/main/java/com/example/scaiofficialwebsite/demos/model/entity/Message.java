@@ -14,6 +14,7 @@ import java.util.Date;
 @Data
 public class Message {
     private Long id;
-    private String content;
+    private String userName;
+    private String messageContent;
     private Date createTime;
 }

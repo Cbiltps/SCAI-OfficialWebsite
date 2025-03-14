@@ -23,7 +23,7 @@ public class MessageService {
 
     public Message saveMessage(String content) {
         Message message = new Message();
-        message.setContent(content);
+        message.setMessageContent(content);
         message.setCreateTime(new Date());
         return messageMapper.save(message);
     }

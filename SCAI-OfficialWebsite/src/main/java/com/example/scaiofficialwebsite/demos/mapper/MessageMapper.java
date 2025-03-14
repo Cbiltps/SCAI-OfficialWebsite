@@ -2,7 +2,6 @@ package com.example.scaiofficialwebsite.demos.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.scaiofficialwebsite.demos.model.entity.Message;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -13,9 +12,7 @@ import java.util.List;
  * Date: 2025-03-13
  * Time: 18:24
  */
-@Mapper
 public interface MessageMapper extends BaseMapper<Message> {
-
     Message save(Message message);
 
     List<Message> findAll();
