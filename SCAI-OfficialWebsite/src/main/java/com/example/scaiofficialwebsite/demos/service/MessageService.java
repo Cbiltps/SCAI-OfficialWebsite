@@ -1,9 +1,10 @@
 package com.example.scaiofficialwebsite.demos.service;
 
 import com.example.scaiofficialwebsite.demos.model.entity.Message;
-import com.example.scaiofficialwebsite.demos.repository.MessageRepository;
+import com.example.scaiofficialwebsite.demos.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -15,19 +16,19 @@ import java.util.List;
  * Date: 2025-03-13
  * Time: 18:21
  */
-@Repository
+@Service
 public class MessageService {
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageMapper messageMapper;
 
     public Message saveMessage(String content) {
         Message message = new Message();
         message.setContent(content);
         message.setCreateTime(new Date());
-        return messageRepository.save(message);
+        return messageMapper.save(message);
     }
 
     public List<Message> getAllMessages() {
-        return messageRepository.findAll();
+        return messageMapper.findAll();
     }
 }

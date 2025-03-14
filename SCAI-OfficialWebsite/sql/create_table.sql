@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS scai_official_website CHARACTER SET utf8mb4;
