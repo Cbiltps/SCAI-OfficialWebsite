@@ -19,11 +19,6 @@ public class ProjectAddRequest implements Serializable {
     private static final long serialVersionUID = -3332575932954677388L;
 
     /**
-     * id
-     */
-    private Long id;
-
-    /**
      * 项目名称
      */
     private String projectName;

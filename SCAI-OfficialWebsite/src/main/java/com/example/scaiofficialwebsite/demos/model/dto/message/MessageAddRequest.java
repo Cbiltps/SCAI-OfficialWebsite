@@ -19,11 +19,6 @@ public class MessageAddRequest implements Serializable {
     private static final long serialVersionUID = -8582964001344358848L;
 
     /**
-     * id
-     */
-    private Long id;
-
-    /**
      * 用户名称
      */
     private String userName;

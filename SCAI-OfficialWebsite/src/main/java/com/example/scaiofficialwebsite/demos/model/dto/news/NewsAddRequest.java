@@ -17,11 +17,6 @@ public class NewsAddRequest implements Serializable {
     private static final long serialVersionUID = 887856485383957985L;
 
     /**
-     * id
-     */
-    private Long id;
-
-    /**
      * 标题
      */
     private String title;
