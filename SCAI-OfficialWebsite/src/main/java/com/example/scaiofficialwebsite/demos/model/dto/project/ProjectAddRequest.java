@@ -47,4 +47,14 @@ public class ProjectAddRequest implements Serializable {
      * 项目类型:AI模型/网页设计/APP设计
      */
     private String projectType;
+
+    /**
+     * 图片连接
+     */
+    private String imageUrl;
+
+    /**
+     * 项目连接
+     */
+    private String projectUrl;
 }

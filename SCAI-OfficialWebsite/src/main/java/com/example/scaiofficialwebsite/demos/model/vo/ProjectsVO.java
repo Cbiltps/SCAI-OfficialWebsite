@@ -50,6 +50,16 @@ public class ProjectsVO implements Serializable {
     private String projectType;
 
     /**
+     * 图片连接
+     */
+    private String imageUrl;
+
+    /**
+     * 项目连接
+     */
+    private String projectUrl;
+
+    /**
      * 创建时间
      */
     private Date createTime;

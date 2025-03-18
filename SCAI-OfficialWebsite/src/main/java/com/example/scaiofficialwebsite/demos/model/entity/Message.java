@@ -8,11 +8,11 @@ import lombok.Data;
 
 /**
  * 
- * @TableName projects
+ * @TableName message
  */
-@TableName(value ="projects")
+@TableName(value ="message")
 @Data
-public class Projects implements Serializable {
+public class Message implements Serializable {
     /**
      * id
      */
@@ -20,39 +20,24 @@ public class Projects implements Serializable {
     private Long id;
 
     /**
-     * 项目名称
+     * 用户名称
      */
-    private String projectName;
+    private String userName;
 
     /**
-     * 描述
+     * 用户电话
      */
-    private String projectDescription;
+    private String userPhone;
 
     /**
-     * 正文
+     * 用户邮件
      */
-    private String projectContent;
+    private String userEmail;
 
     /**
-     * 项目状态:准备中/可进行/已下马
+     * 留言正文
      */
-    private String projectStatus;
-
-    /**
-     * 项目类型:AI模型/网页设计/APP设计
-     */
-    private String projectType;
-
-    /**
-     * 图片连接
-     */
-    private String imageUrl;
-
-    /**
-     * 项目连接
-     */
-    private String projectUrl;
+    private String messageContent;
 
     /**
      * 编辑时间
