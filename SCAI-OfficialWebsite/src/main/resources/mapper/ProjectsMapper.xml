@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.scaiofficialwebsite.demos.mapper.ProjectsMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.scaiofficialwebsite.demos.model.entity.Projects">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectName" column="projectName" jdbcType="VARCHAR"/>
+            <result property="projectDescription" column="projectDescription" jdbcType="VARCHAR"/>
+            <result property="projectContent" column="projectContent" jdbcType="VARCHAR"/>
+            <result property="projectStatus" column="projectStatus" jdbcType="VARCHAR"/>
+            <result property="projectType" column="projectType" jdbcType="VARCHAR"/>
+            <result property="editTime" column="editTime" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,projectName,projectDescription,
+        projectContent,projectStatus,projectType,
+        editTime,createTime,updateTime,
+        isDelete
+    </sql>
+</mapper>

@@ -7,10 +7,10 @@ import com.example.scaiofficialwebsite.demos.common.ResultUtils;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.exception.ThrowUtils;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsAddRequest;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsDeleteRequest;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsQueryRequest;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsUpdateRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsAddRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsDeleteRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsQueryRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsUpdateRequest;
 import com.example.scaiofficialwebsite.demos.model.entity.News;
 import com.example.scaiofficialwebsite.demos.model.vo.NewsVO;
 import com.example.scaiofficialwebsite.demos.service.NewsService;
@@ -38,7 +38,6 @@ public class NewsController {
         ThrowUtils.throwIf(newsAddRequest == null, ErrorCode.PARAMS_ERROR);
         News news = new News();
         BeanUtil.copyProperties(newsAddRequest, news);
-        // TODO: 设置news其他属性
         boolean result = newsService.save(news);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(news.getId());
@@ -60,7 +59,6 @@ public class NewsController {
         }
         News news = new News();
         BeanUtils.copyProperties(newsUpdateRequest, news);
-        // TODO: 设置news其他属性
         boolean result = newsService.updateById(news);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);

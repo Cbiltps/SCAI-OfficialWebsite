@@ -1,7 +1,7 @@
 package com.example.scaiofficialwebsite.demos.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsQueryRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsQueryRequest;
 import com.example.scaiofficialwebsite.demos.model.entity.News;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.scaiofficialwebsite.demos.model.vo.NewsVO;

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.mapper.NewsMapper;
-import com.example.scaiofficialwebsite.demos.model.dto.NewsQueryRequest;
+import com.example.scaiofficialwebsite.demos.model.dto.news.NewsQueryRequest;
 import com.example.scaiofficialwebsite.demos.model.entity.News;
 import com.example.scaiofficialwebsite.demos.model.vo.NewsVO;
 import com.example.scaiofficialwebsite.demos.service.NewsService;
@@ -45,7 +45,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News>
         queryWrapper.eq(ObjUtil.isNotNull(id), "id", id);
         queryWrapper.like(StrUtil.isNotBlank(title), "title", title);
         queryWrapper.like(StrUtil.isNotBlank(newsDescription), "newsDescription", newsDescription);
-        queryWrapper.like(StrUtil.isNotBlank(newsContent), "userName", newsContent);
+        queryWrapper.like(StrUtil.isNotBlank(newsContent), "newsContent", newsContent);
         queryWrapper.eq(StrUtil.isNotBlank(newsType), "newsType", newsType);
         queryWrapper.like(StrUtil.isNotBlank(author), "author", author);
         queryWrapper.orderBy(StrUtil.isNotEmpty(sortField), sortOrder.equals("descend"), sortField);
@@ -53,11 +53,11 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News>
     }
 
     @Override
-    public List<NewsVO> getNewsVOList(List<News> newsList) {
-        if (CollUtil.isEmpty(newsList)) {
+    public List<NewsVO> getNewsVOList(List<News> records) {
+        if (CollUtil.isEmpty(records)) {
             return new ArrayList<>();
         }
-        return newsList.stream().map(this::getNewsVO).collect(Collectors.toList());
+        return records.stream().map(this::getNewsVO).collect(Collectors.toList());
     }
 
     @Override

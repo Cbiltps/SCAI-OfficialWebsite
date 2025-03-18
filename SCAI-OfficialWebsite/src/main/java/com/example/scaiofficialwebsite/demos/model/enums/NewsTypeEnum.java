@@ -1,5 +1,6 @@
 package com.example.scaiofficialwebsite.demos.model.enums;
 
+import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.Getter;
 
@@ -36,23 +37,4 @@ public enum NewsTypeEnum {
                 collect(Collectors.toMap(NewsTypeEnum::getValue, newsTypeEnum -> newsTypeEnum));
         return newsTypeEnumMap.getOrDefault(value, null);
     }
-
-    /**
-     * 根据 value 获取枚举
-     *
-     * @param value 枚举值的 value
-     * @return 枚举值
-     */
-//    public static UserRoleEnum getEnumByValue(String value) {
-//        if (ObjUtil.isEmpty(value)) {
-//            return null;
-//        }
-//        for (UserRoleEnum userRoleEnum : UserRoleEnum.values()) {
-//            if (userRoleEnum.value.equals(value)) {
-//                return userRoleEnum;
-//            }
-//        }
-//        return null;
-//    }
-
 }

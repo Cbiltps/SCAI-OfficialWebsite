@@ -1,4 +1,4 @@
-package com.example.scaiofficialwebsite.demos.model.dto;
+package com.example.scaiofficialwebsite.demos.model.dto.news;
 
 import com.example.scaiofficialwebsite.demos.common.DeleteRequest;
 

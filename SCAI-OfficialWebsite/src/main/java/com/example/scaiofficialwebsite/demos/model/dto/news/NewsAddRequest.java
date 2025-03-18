@@ -1,6 +1,5 @@
-package com.example.scaiofficialwebsite.demos.model.dto;
+package com.example.scaiofficialwebsite.demos.model.dto.news;
 
-import com.example.scaiofficialwebsite.demos.common.PageRequest;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,12 +9,12 @@ import java.io.Serializable;
  * Description:
  * User: lichengxiang
  * Date: 2025-03-17
- * Time: 16:36
+ * Time: 15:34
  */
 @Data
-public class NewsQueryRequest extends PageRequest implements Serializable {
+public class NewsAddRequest implements Serializable {
 
-    private static final long serialVersionUID = 2203230634190305087L;
+    private static final long serialVersionUID = 887856485383957985L;
 
     /**
      * id
@@ -46,4 +45,14 @@ public class NewsQueryRequest extends PageRequest implements Serializable {
      * 作者
      */
     private String author;
+
+    /**
+     * 图片链接
+     */
+    private String imageUrl;
+
+    /**
+     * 新闻连接
+     */
+    private String newsUrl;
 }

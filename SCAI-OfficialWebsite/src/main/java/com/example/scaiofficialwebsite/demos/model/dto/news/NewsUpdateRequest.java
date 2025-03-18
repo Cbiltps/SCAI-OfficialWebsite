@@ -1,4 +1,4 @@
-package com.example.scaiofficialwebsite.demos.model.dto;
+package com.example.scaiofficialwebsite.demos.model.dto.news;
 
 import lombok.Data;
 
@@ -9,12 +9,12 @@ import java.io.Serializable;
  * Description:
  * User: lichengxiang
  * Date: 2025-03-17
- * Time: 15:34
+ * Time: 16:05
  */
 @Data
-public class NewsAddRequest implements Serializable {
+public class NewsUpdateRequest implements Serializable {
 
-    private static final long serialVersionUID = 887856485383957985L;
+    private static final long serialVersionUID = -8856784440146500943L;
 
     /**
      * id
