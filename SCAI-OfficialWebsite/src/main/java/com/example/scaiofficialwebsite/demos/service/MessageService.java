@@ -22,3 +22,4 @@ public interface MessageService extends IService<Message> {
 
     MessageVO getMessageVO(Message message);
 }
+

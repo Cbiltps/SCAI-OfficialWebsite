@@ -34,5 +34,6 @@ knife4j:
         api-rule-resources:
           - com.example.scaiofficialwebsite.demos.controller
 # 文件上传路径
-local:
-  path: /Users/lichengxiang/Documents/Coding/JavaCode/SCAI/SCAI-OfficialWebsite/Picture
+music:
+  local:
+    path: xxx

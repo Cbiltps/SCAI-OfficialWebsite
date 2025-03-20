@@ -47,11 +47,6 @@ public class NewsUpdateRequest implements Serializable {
     private String author;
 
     /**
-     * 图片链接
-     */
-    private String imageUrl;
-
-    /**
      * 新闻连接
      */
     private String newsUrl;
