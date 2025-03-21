@@ -4,8 +4,10 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.scaiofficialwebsite.demos.annotation.AuthCheck;
 import com.example.scaiofficialwebsite.demos.common.BaseResponse;
 import com.example.scaiofficialwebsite.demos.common.ResultUtils;
+import com.example.scaiofficialwebsite.demos.constant.UserConstant;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.exception.ThrowUtils;
@@ -41,6 +43,7 @@ public class NewsController {
     FileManager fileManager;
 
 //    @PostMapping("/add")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
 //    public BaseResponse<Long> addNews(@RequestBody NewsAddRequest newsAddRequest,
 //                                      @RequestPart("file") MultipartFile multipartFile) {
 //        ThrowUtils.throwIf(newsAddRequest == null || multipartFile == null, ErrorCode.PARAMS_ERROR);
@@ -54,6 +57,7 @@ public class NewsController {
 //    }
 
     @PostMapping("/add")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Long> addNews(@RequestPart("jsonData") String newsAddRequestJsonData,
                                       @RequestPart("file") MultipartFile multipartFile) {
         NewsAddRequest newsAddRequest = JSONUtil.toBean(newsAddRequestJsonData, NewsAddRequest.class);
@@ -68,6 +72,7 @@ public class NewsController {
     }
 
     @PostMapping("/delete")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> deleteNews(@RequestBody NewsDeleteRequest newsDeleteRequest) {
         if (newsDeleteRequest == null || newsDeleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -80,6 +85,7 @@ public class NewsController {
     }
 
     @PostMapping("/update")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateNews(@RequestPart("jsonData") String newUpdateRequestJsonData,
                                             @RequestPart("file") MultipartFile multipartFile) {
         NewsUpdateRequest newsUpdateRequest = JSONUtil.toBean(newUpdateRequestJsonData, NewsUpdateRequest.class);
@@ -114,7 +120,7 @@ public class NewsController {
      * 分页获取新闻封装列表
      * @return
      */
-    @PostMapping("/page")
+    @PostMapping("/list/page/vo")
     public BaseResponse<Page<NewsVO>> getNewsVOListByPage(@RequestBody NewsQueryRequest newsQueryRequest) {
         ThrowUtils.throwIf(newsQueryRequest == null, ErrorCode.PARAMS_ERROR);
         long current = newsQueryRequest.getCurrent();

@@ -3,8 +3,10 @@ package com.example.scaiofficialwebsite.demos.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.scaiofficialwebsite.demos.annotation.AuthCheck;
 import com.example.scaiofficialwebsite.demos.common.BaseResponse;
 import com.example.scaiofficialwebsite.demos.common.ResultUtils;
+import com.example.scaiofficialwebsite.demos.constant.UserConstant;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.exception.ThrowUtils;
@@ -43,6 +45,7 @@ public class ProjectsController {
     FileManager fileManager;
 
     @PostMapping("/add")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Long> addProjects(@RequestPart("jsonData") String projectAddRequestJsonData,
                                        @RequestPart("file") MultipartFile multipartFile) {
         ProjectAddRequest projectAddRequest = JSONUtil.toBean(projectAddRequestJsonData, ProjectAddRequest.class);
@@ -57,6 +60,7 @@ public class ProjectsController {
     }
 
     @PostMapping("/delete")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> deleteProjects(@RequestBody ProjectDeleteRequest projectDeleteRequest) {
         if (projectDeleteRequest == null || projectDeleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -69,6 +73,7 @@ public class ProjectsController {
     }
 
     @PostMapping("/update")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateProjects(@RequestPart("jsonData") String projectUpdateRequestJsonData,
                                                 @RequestPart("file") MultipartFile multipartFile) {
         ProjectUpdateRequest projectUpdateRequest = JSONUtil.toBean(projectUpdateRequestJsonData, ProjectUpdateRequest.class);
@@ -103,7 +108,7 @@ public class ProjectsController {
      * 分页获取新闻封装列表
      * @return
      */
-    @PostMapping("/page")
+    @PostMapping("/list/page/vo")
     public BaseResponse<Page<ProjectsVO>> getProjectsVOListByPage(@RequestBody ProjectQueryRequest projectQueryRequest) {
         ThrowUtils.throwIf(projectQueryRequest == null, ErrorCode.PARAMS_ERROR);
         long current = projectQueryRequest.getCurrent();

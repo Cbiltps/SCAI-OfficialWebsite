@@ -76,7 +76,7 @@ public class MessageController {
      * 分页获取新闻封装列表
      * @return
      */
-    @PostMapping("/page")
+    @PostMapping("/list/page/vo")
     public BaseResponse<Page<MessageVO>> getMessageVOListByPage(@RequestBody MessageQueryRequest messageQueryRequest) {
         ThrowUtils.throwIf(messageQueryRequest == null, ErrorCode.PARAMS_ERROR);
         long current = messageQueryRequest.getCurrent();
