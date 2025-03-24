@@ -62,7 +62,7 @@ public class ProjectsVO implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private Long createTime;
 
     /**
      * 图片内容

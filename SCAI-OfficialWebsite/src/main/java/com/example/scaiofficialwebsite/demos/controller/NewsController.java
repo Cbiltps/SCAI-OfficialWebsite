@@ -11,6 +11,7 @@ import com.example.scaiofficialwebsite.demos.constant.UserConstant;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.exception.ThrowUtils;
+import com.example.scaiofficialwebsite.demos.manager.DateManager;
 import com.example.scaiofficialwebsite.demos.manager.FileManager;
 import com.example.scaiofficialwebsite.demos.model.dto.news.NewsAddRequest;
 import com.example.scaiofficialwebsite.demos.model.dto.news.NewsDeleteRequest;
@@ -24,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +44,9 @@ public class NewsController {
 
     @Resource
     FileManager fileManager;
+
+    @Resource
+    DateManager dateManager;
 
 //    @PostMapping("/add")
 //    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -111,7 +117,9 @@ public class NewsController {
         ThrowUtils.throwIf(news == null, ErrorCode.NOT_FOUND_ERROR);
         byte[] fileContent = fileManager.readFile(news, News::getImageUrl);
         ThrowUtils.throwIf(fileContent == null, ErrorCode.PARAMS_ERROR, "文件内容为空!");
+        Date standardDate = news.getCreateTime();
         NewsVO newsVO = newsService.getNewsVO(news);
+        newsVO.setCreateTime(dateManager.convertDateToTimestamp(standardDate));
         newsVO.setFileContent(fileContent);
         return ResultUtils.success(newsVO);
     }
@@ -127,9 +135,12 @@ public class NewsController {
         long pageSize = newsQueryRequest.getPageSize();
         Page<News> newsPage = newsService.page(new Page<>(current, pageSize), newsService.getQueryWrapper(newsQueryRequest));
         Page<NewsVO> newsVOPage = new Page<>(current, pageSize, newsPage.getTotal());
+        Map<Long, Long> allDateMap = dateManager.convertDateToMap(newsPage.getRecords(), News::getCreateTime, News::getId);
         List<NewsVO> newsVOList = newsService.getNewsVOList(newsPage.getRecords());
-        List<NewsVO> newNewsVOList = fileManager.assignFileContentToList(newsVOList, NewsVO::getImageUrl, NewsVO::getId,
+        List<NewsVO> tempNewsVOList = fileManager.assignFileContentToList(newsVOList, NewsVO::getImageUrl, NewsVO::getId,
                 (newsVO, id, content) -> newsVO.setFileContent(content));
+        List<NewsVO> newNewsVOList = dateManager.assignDateToList(allDateMap, tempNewsVOList, NewsVO::getCreateTime,
+                NewsVO::getId, (newsVO, id, timestamp) -> newsVO.setCreateTime(timestamp));
         newsVOPage.setRecords(newNewsVOList);
         return ResultUtils.success(newsVOPage);
     }

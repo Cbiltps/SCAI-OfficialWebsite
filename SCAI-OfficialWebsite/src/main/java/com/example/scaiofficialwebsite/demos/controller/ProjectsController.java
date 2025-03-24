@@ -10,20 +10,26 @@ import com.example.scaiofficialwebsite.demos.constant.UserConstant;
 import com.example.scaiofficialwebsite.demos.exception.BusinessException;
 import com.example.scaiofficialwebsite.demos.exception.ErrorCode;
 import com.example.scaiofficialwebsite.demos.exception.ThrowUtils;
+import com.example.scaiofficialwebsite.demos.manager.DateManager;
 import com.example.scaiofficialwebsite.demos.manager.FileManager;
 import com.example.scaiofficialwebsite.demos.model.dto.project.ProjectAddRequest;
 import com.example.scaiofficialwebsite.demos.model.dto.project.ProjectDeleteRequest;
 import com.example.scaiofficialwebsite.demos.model.dto.project.ProjectQueryRequest;
 import com.example.scaiofficialwebsite.demos.model.dto.project.ProjectUpdateRequest;
+import com.example.scaiofficialwebsite.demos.model.entity.News;
 import com.example.scaiofficialwebsite.demos.model.entity.Projects;
+import com.example.scaiofficialwebsite.demos.model.vo.NewsVO;
 import com.example.scaiofficialwebsite.demos.model.vo.ProjectsVO;
 import com.example.scaiofficialwebsite.demos.service.ProjectsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.krb5.internal.rcache.DflCache;
 
 import javax.annotation.Resource;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +49,9 @@ public class ProjectsController {
 
     @Resource
     FileManager fileManager;
+
+    @Resource
+    DateManager dateManager;
 
     @PostMapping("/add")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -99,8 +108,13 @@ public class ProjectsController {
         ThrowUtils.throwIf(projects == null, ErrorCode.NOT_FOUND_ERROR);
         byte[] fileContent = fileManager.readFile(projects, Projects::getImageUrl);
         ThrowUtils.throwIf(fileContent == null, ErrorCode.PARAMS_ERROR, "文件内容为空!");
+        Date standardDate = projects.getCreateTime();
         ProjectsVO projectsVO = projectsService.getProjectsVO(projects);
+        projectsVO.setCreateTime(dateManager.convertDateToTimestamp(standardDate));
         projectsVO.setFileContent(fileContent);
+//        for (byte b : fileContent) {
+//            System.out.printf("%02X ", b);
+//        }
         return ResultUtils.success(projectsVO);
     }
 
@@ -115,10 +129,13 @@ public class ProjectsController {
         long pageSize = projectQueryRequest.getPageSize();
         Page<Projects> projectsPage = projectsService.page(new Page<>(current, pageSize), projectsService.getQueryWrapper(projectQueryRequest));
         Page<ProjectsVO> projectsVOPage = new Page<>(current, pageSize, projectsPage.getTotal());
+        Map<Long, Long> allDateMap = dateManager.convertDateToMap(projectsPage.getRecords(), Projects::getCreateTime, Projects::getId);
         List<ProjectsVO> projectsVOList = projectsService.getProjectsVOList(projectsPage.getRecords());
-        // projectsVOList获取Project的id, 然后去allFileContentsMap里面找对应的内容,并赋值到list里面
-        List<ProjectsVO> newProjectsVOList = fileManager.assignFileContentToList(projectsVOList, ProjectsVO::getImageUrl,
+        // projectsVOList获取Project的id, 然后去allFileContentsMap里面找对应的内容, 并赋值到list里面
+        List<ProjectsVO> tempProjectsVOList = fileManager.assignFileContentToList(projectsVOList, ProjectsVO::getImageUrl,
                 ProjectsVO::getId, (projectVO, id, content) -> projectVO.setFileContent(content));
+        List<ProjectsVO> newProjectsVOList = dateManager.assignDateToList(allDateMap, tempProjectsVOList, ProjectsVO::getCreateTime,
+                ProjectsVO::getId, (projectsVO, id, timestamp) -> projectsVO.setCreateTime(timestamp));
         projectsVOPage.setRecords(newProjectsVOList);
         return ResultUtils.success(projectsVOPage);
     }

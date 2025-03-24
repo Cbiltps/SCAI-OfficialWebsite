@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, message-scalable=no"
+    />
+
+    <title>请求测试页面</title>
+
+    <!-- jQuery导入 -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+    <script>
+        // 发送 GET 请求
+        fetch('/api/news/get?id=1902637799223066626', {
+            method: 'GET',
+            headers: {
+                // 如果需要，可以添加请求头信息
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok');
+            })
+            .then(data => {
+                console.log('请求成功，返回的数据:', data);
+
+                const creatTime = data.data.createTime;
+                const timestamp = parseInt(creatTime);
+                const date = new Date(timestamp);
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                };
+
+                const formattedDate = date.toLocaleString(undefined, options);
+                console.log(formattedDate);
+
+                // const formattedDate = dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+                // console.log(formattedDate);
+
+                // 获取数据
+                const base64String = data.data.fileContent;
+                // 直接解码 Base64 字符串为二进制数据
+                const binaryString = atob(base64String);
+                const binaryLength = binaryString.length;
+                const bytes = new Uint8Array(binaryLength);
+                for (let i = 0; i < binaryLength; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+
+                // 检测图片格式
+                let imageType;
+                if (bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+                    imageType = 'image/jpeg';
+                } else if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47 && bytes[4] === 0x0D && bytes[5] === 0x0A && bytes[6] === 0x1A && bytes[7] === 0x0A) {
+                    imageType = 'image/png';
+                } else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x38) {
+                    imageType = 'image/gif';
+                } else if (bytes[0] === 0x42 && bytes[1] === 0x4D) {
+                    imageType = 'image/bmp';
+                } else {
+                    // 默认使用 image/png
+                    imageType = 'image/png';
+                }
+
+                const blob = new Blob([bytes], {type: imageType});
+                const imageUrl = URL.createObjectURL(blob);
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'Decoded Image';
+
+                // 动态创建容器
+                const imageContainer = document.createElement('div');
+                imageContainer.id = 'imageContainer';
+                imageContainer.appendChild(img);
+
+                // 将容器添加到 body 中
+                document.body.appendChild(imageContainer);
+            })
+            .catch(error => {
+                console.error('请求失败:', error);
+            });
+    </script>
+</head>
+
+<body id="body">
+    这是一个测试页面!
+</body>
+</html>
